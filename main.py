@@ -1,13 +1,17 @@
+import time
 import telegram
 
-bot = telegram.Bot(token='BOT TOKEN')
+bot = telegram.Bot(token="7956675929:AAGLMzixq2kNV1P2a6benbzWf_8Z7vuGcOo")
 
-updates = bot.get_updates()
+last_id = 0
 
+while True:
+    updates = bot.getUpdates(offset=last_id)
+    for update in updates:
+        update_id = update.update_id
+        last_id = update_id + 1
+        chat_id = update.message.chat_id
+        text = update.message.text
 
-if updates:
-    message = updates[-1].message
-    if message.text:
-        chat_id = message.chat.id
-        text = message.text
-        bot.send_message(chat_id=chat_id, text=text)
+        bot.send_message(chat_id, text)
+    time.sleep(1)
